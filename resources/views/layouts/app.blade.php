@@ -15,7 +15,7 @@
             <a href="#" class="logo">nnxmxni</a>
 
             <ul class="menu">
-                <li><a href="#" class="active">Home </a></li>
+                <li><a href="/home" class="active">Home </a></li>
                 <li><a href="#">User stories</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>

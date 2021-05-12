@@ -18,13 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', [PostsController::class, 'index']); /* done */
-Route::get('/home/{id}', [PostsController::class, 'show']); /* done */
-// Route::post('/home/store', [PostsController::class, 'store']);
-Route::get('/home/create', [PostsController::class, 'create']);
-// Route::get('/home/{id}/edit', [PostsController::class, 'edit']);
-// Route::put('/home/{id}', [PostsController::class, 'update']);
-// Route::delete('/home/{id}', [PostsController::class, 'delete']);
 
-
-
+Route::get('/home', [PostsController::class, 'index']);
+Route::get('/create', [PostsController::class, 'create']);
+Route::get('/home/{id}', [PostsController::class, 'show']);
+Route::post('/home', [PostsController::class, 'store']);
+Route::get('/edit/{id}', [PostsController::class, 'edit']);
+Route::post('/edit', [PostsController::class, 'update']);

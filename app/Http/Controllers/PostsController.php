@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Post;
 
 class PostsController extends Controller
@@ -14,8 +16,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        /* $posts = Post::all(); */
-        $posts =Post::orderBy('title', 'desc')->get();
+        //
+        $posts = Post::all();
         return view('posts.index')->with('posts', $posts);
     }
 
@@ -26,6 +28,7 @@ class PostsController extends Controller
      */
     public function create()
     {
+        //
         return view('posts.create');
     }
 
@@ -37,7 +40,24 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|unique:posts|max:255',
+            'body' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return redirect('/create')
+                    ->withErrors($validator)
+                    ->withInput();
+        }
+
+        $post = new Post;
+
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->save();
+
+        return redirect('/home')->with('success', 'Post Created');
     }
 
     /**
@@ -49,9 +69,7 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-
         return view('posts.show')->with('post', $post);
-
     }
 
     /**
@@ -62,7 +80,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view('posts.edit')->with('post', $post);
     }
 
     /**
@@ -74,7 +93,24 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'body' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return redirect('/create')
+                    ->withErrors($validator)
+                    ->withInput();
+        }
+
+        $post = new Post;
+
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->save();
+
+        return redirect('/home')->with('success', 'Post Updated!');
     }
 
     /**

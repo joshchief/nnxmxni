@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('messages.alert')
     @if (count($posts) > 0)
         @foreach ($posts as $post)
             <div class="card">
