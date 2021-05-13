@@ -91,23 +91,24 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        // dd('update function');
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
             'body' => 'required'
         ]);
-
-        if($validator->fails()){
-            return redirect('/create')
-                    ->withErrors($validator)
-                    ->withInput();
-        }
-
-        $post = new Post;
-
-        $post->title = $request->input('title');
-        $post->body = $request->input('body');
+            
+            if($validator->fails()){
+                return redirect('/create')
+                ->withErrors($validator)
+                ->withInput();
+            }
+            
+        $post = Post::find($request->id);
+        $post->title = $request->title;
+        $post->body = $request->body;
         $post->save();
 
         return redirect('/home')->with('success', 'Post Updated!');
@@ -121,6 +122,8 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($request->id);
+        $post->destroy();
+        return redirect('/home')->with('success', 'Post Deleted');
     }
 }

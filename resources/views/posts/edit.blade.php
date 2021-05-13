@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<form action="/home" method="POST">
+<form action="/edit" method="POST">
     @csrf
     @include('messages.alert')
+    <input type="hidden" name="id" value="{{$post->id}}">
     <div class="form-group">
       <label for="exampleFormControlInput1">Title:</label>
       <input type="text" class="form-control" name="title" id="title" placeholder="title" value="{{$post->title}}">
