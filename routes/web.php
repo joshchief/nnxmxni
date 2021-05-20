@@ -25,3 +25,7 @@ Route::get('/home/{id}', [PostsController::class, 'show']);
 Route::post('/home', [PostsController::class, 'store']);
 Route::get('/edit/{id}', [PostsController::class, 'edit']);
 Route::post('/edit', [PostsController::class, 'update']);
+Route::get ('/delete/{id}', [PostsController::class, 'destroy']);
+Auth::routes();
+
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');

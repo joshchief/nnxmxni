@@ -53,8 +53,8 @@ class PostsController extends Controller
 
         $post = new Post;
 
-        $post->title = $request->input('title');
-        $post->body = $request->input('body');
+        $post->title = $request->title;
+        $post->body = $request->body;
         $post->save();
 
         return redirect('/home')->with('success', 'Post Created');
@@ -95,20 +95,22 @@ class PostsController extends Controller
     {
         // dd('update function');
         // dd($request->all());
+            
+        $post = Post::find($request->id);
+        $post->title = $request->title;
+        $post->body = $request->body;
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
             'body' => 'required'
         ]);
             
             if($validator->fails()){
-                return redirect('/create')
-                ->withErrors($validator)
-                ->withInput();
+                return view('posts.edit')
+                            ->with('post', $post)
+                            ->withErrors($validator);
             }
-            
-        $post = Post::find($request->id);
-        $post->title = $request->title;
-        $post->body = $request->body;
+
         $post->save();
 
         return redirect('/home')->with('success', 'Post Updated!');
@@ -122,8 +124,8 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($request->id);
-        $post->destroy();
+        $post = Post::find($id);
+        $post->delete();
         return redirect('/home')->with('success', 'Post Deleted');
     }
 }
