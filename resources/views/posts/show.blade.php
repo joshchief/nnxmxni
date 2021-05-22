@@ -6,7 +6,7 @@
         <div class="container">
         <h1 class="title">{{$post->title}}</h1>
         <h5>{{$post->created_at->format('M d, Y')}}/ by </h5><h6>{{$post->user->name}}</h6>
-        <p class="lead">{{$post->body}}</p>
+        <p class="lead">{!!$post->body!!}</p>
         </div>
     </div>
     @if (!Auth::guest())

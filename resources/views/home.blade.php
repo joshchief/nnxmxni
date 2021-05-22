@@ -7,7 +7,7 @@
             @foreach ($posts as $post)
                 <h1 class="title">{{$post->title}}</h1>
                 <h5>{{$post->created_at->format('M d, Y')}} / by </h5><h6>{{$post->user->name}}</h6>
-                <p>{{Str::limit($post->body, 400)}} <br> <a href="/home/{{$post->id}}" class="btn btn-primary btn-sm">Read more</a></p>
+                <p>{!!Str::limit($post->body, 400)!!} <br><br> <a href="/home/{{$post->id}}" class="btn btn-primary btn-sm">Read more</a></p>
                 <br>
             @endforeach
         @else

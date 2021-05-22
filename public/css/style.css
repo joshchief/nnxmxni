@@ -107,10 +107,14 @@ nav{
 .title{
     font-family: Helvetica;
     font-weight: 600;
-    text-transform: ;
+    text-transform: uppercase;
 }
 
-#edit{
+form{
     width: 600px;
     margin: 70px auto;
+}
+
+#article p{
+    top: 10px;
 }
