@@ -16,7 +16,7 @@ a{
 
 .wrapper{
     width: 100%;
-    /* max-width: 960px; */
+    /* max-width: 980px; */
     margin: 0 auto;
     height: 100vh;
     box-sizing: border-box;
@@ -91,7 +91,26 @@ nav{
     text-overflow: ellipsis;
 }
 
+#article h5{
+    display: inline;
+    font-size: 17px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+#article h6{
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 800;
+    color: #097925;
+}
+
 .title{
     font-family: Helvetica;
     font-weight: 600;
+    text-transform: ;
+}
+
+#edit{
+    width: 600px;
+    margin: 70px auto;
 }

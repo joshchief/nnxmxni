@@ -5,10 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 
 class PostsController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => 'show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -55,9 +65,10 @@ class PostsController extends Controller
 
         $post->title = $request->title;
         $post->body = $request->body;
+        $post->user_id = Auth::id();
         $post->save();
 
-        return redirect('/home')->with('success', 'Post Created');
+        return redirect('/')->with('success', 'Post Created');
     }
 
     /**
@@ -68,7 +79,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
+        $post = Post::find($id); 
         return view('posts.show')->with('post', $post);
     }
 
@@ -80,8 +91,14 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
+
         $post = Post::find($id);
-        return view('posts.edit')->with('post', $post);
+        if( Auth::id() == $post->user_id){
+            return view('posts.edit')->with('post', $post);
+        }
+
+        return redirect('/');
+        
     }
 
     /**
@@ -111,9 +128,14 @@ class PostsController extends Controller
                             ->withErrors($validator);
             }
 
-        $post->save();
 
-        return redirect('/home')->with('success', 'Post Updated!');
+        if(Auth::id() == $post->user_id)
+        {
+            $post->save();
+            return redirect('/')->with('success', 'Post Updated!');
+        }
+
+        return redirect('/');
     }
 
     /**
@@ -125,7 +147,11 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
-        $post->delete();
-        return redirect('/home')->with('success', 'Post Deleted');
+        if(Auth::id() == $post->user_id)
+        {
+            $post->delete();
+            return redirect('/')->with('success', 'Post Deleted');
+        }
+        return redirect('/')->with('error', 'Unauthorized action');
     }
 }

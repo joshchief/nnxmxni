@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,13 +20,14 @@ Route::get('/', function () {
 });
 
 
-Route::get('/home', [PostsController::class, 'index']);
+// Route::get('/home', [PostsController::class, 'index']);
 Route::get('/create', [PostsController::class, 'create']);
 Route::get('/home/{id}', [PostsController::class, 'show']);
-Route::post('/home', [PostsController::class, 'store']);
+Route::post('/', [PostsController::class, 'store']);
 Route::get('/edit/{id}', [PostsController::class, 'edit']);
 Route::post('/edit', [PostsController::class, 'update']);
 Route::get ('/delete/{id}', [PostsController::class, 'destroy']);
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/story', [HomeController::class, 'story'])->name('story');

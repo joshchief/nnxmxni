@@ -36,8 +36,8 @@
             
             <!-- Left Side Of Navbar -->
             <ul class="menu">
-                <li><a href="/dashboard" class="active">Home</a></li>
-                <li><a href="#">User stories</a></li>
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/story">User stories</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -77,6 +77,7 @@
             </ul>
         
         </nav>
+        
         <main class="py-4">
             @yield('content')
         </main>
