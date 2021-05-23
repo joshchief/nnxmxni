@@ -29,5 +29,4 @@
         @endif
     </table>
 </div>
-    
 @endsection
