@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="article">
+
+    <div class="article">
         @if (count($posts) > 0)
         @include('messages.alert')
             @foreach ($posts as $post)
-                <h1 class="title">{{$post->title}}</h1>
-                <h5>{{$post->created_at->format('M d, Y')}} / by </h5><h6>{{$post->user->name}}</h6>
-                <p>{!!Str::limit($post->body, 400)!!} <br><br> <a href="/home/{{$post->id}}" class="btn btn-primary btn-sm">Read more</a></p>
+                <h3 class="title">{{$post->title}}</h3>
+                <h6>{{$post->created_at->format('M d, Y')}} | <span>{{$post->user->name}}</span></h6>
+                <br>
+                <p>{!!Str::limit($post->body, 400)!!}  <a href="/home/{{$post->id}}" class="read-more">read more</a></p>
                 <br>
             @endforeach
         @else

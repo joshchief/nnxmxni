@@ -14,6 +14,5 @@
       <textarea class="form-control" name="body" id="body" rows="8">{{$post->body}}</textarea><br>
       <button type="submit" class="btn btn-primary mb-2">Submit</button>
     </div>
-   
   </form>
 @endsection

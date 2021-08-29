@@ -1,120 +1,198 @@
-body{
+body {
     padding: 0;
     margin: 0;
 
     /* background-color: #161616; */
 }
 
-ul{
+ul {
     list-style-type: none;
 }
 
-a{
+a {
     text-decoration: none !important;
     color: #030303;
 }
 
-.wrapper{
+.wrapper {
     width: 100%;
     /* max-width: 980px; */
     margin: 0 auto;
-    height: 100vh;
+    /*  height: 100vh; */
     box-sizing: border-box;
-    background-color: #edf1ed;
+    background-color: #e8ebf7;
 }
 
-nav{
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   text-transform: uppercase;
-   font-weight: 600;
-   letter-spacing: 4px;
-   font-family: calibri;
-   position: fixed;
-   top: 0;
-   left: 0;
-   width: 100%;
-   padding: 10px 50px;
-   box-sizing: border-box;
-   background-color: #f4f7ff ;
-   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.0.5) !important;
-   z-index: 1;
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 4px;
+    font-family: "Nunito", sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 50px;
+    box-sizing: border-box;
+    background-color: #ffead0;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5) !important;
+    z-index: 1;
 }
 
-.menu{
+.menu {
     display: flex;
 }
 
-.menu li a{
+.menu li a {
     padding: 5px 10px;
     color: #6c707c;
     font-size: 15px;
 }
 
-.profile{
+.profile {
     display: flex;
 }
 
-.profile li a{
+.profile li a {
     padding: 5px 10px;
     color: #292929;
 }
 
-.logo{
+.logo {
     font-size: 20px;
     font-weight: bold;
     font-family: lucida sans;
 }
 
 .menu li a:hover,
-.active{
+.active {
     background-color: #292929;
-    color: #FFFFFF !important;
+    color: #ffffff !important;
     font-weight: 800;
     transition: all ease 0.4s;
 }
 
-.card{
+.card {
     top: 20%;
 }
 
-#article{
+.article {
     display: block;
-    height: 50px;
-    width: 50%;
-    margin: auto;
-    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+    top: 25px;
+    /* height: 50px; */
+    width: 60%;
+    margin: 0 auto;
+    font-family: "Source Sans Pro", sans-serif;
     letter-spacing: 2px;
     padding: 60px 0;
-   /*  overflow: hidden; */
+    /*  overflow: hidden; */
     text-overflow: ellipsis;
+    box-sizing: border-box;
 }
 
-#article h5{
-    display: inline;
-    font-size: 17px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif
+.article .title {
+    top: 60px;
 }
 
-#article h6{
-    display: inline-block;
-    font-size: 17px;
-    font-weight: 800;
-    color: #097925;
+.article .body p::first-letter {
+    font-size: 38px;
+    font-weight: 500;
 }
 
-.title{
-    font-family: Helvetica;
+/* #article h5 { */
+/* display: inline; */
+/* font-size: 17px; */
+/* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+/* } */
+/*  */
+/* #article h6 { */
+/* display: inline-block; */
+/* font-size: 17px; */
+/* font-weight: 800; */
+/* color: #097925; */
+/* } */
+
+.title {
+    font-family: "Hina Mincho", serif;
+    font-size: 38px;
     font-weight: 600;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
-form{
+form {
     width: 600px;
     margin: 70px auto;
 }
 
-#article p{
+#article p {
     top: 10px;
+}
+
+.read-more {
+    color: #ffffff;
+    background-color: #49111c;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.card-body {
+    margin: 0 auto;
+}
+.card {
+    top: 40px;
+    margin: 0 auto;
+    width: 28rem;
+    /* height: 90vh; */
+}
+
+.card-header h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 2px 0 15px 0;
+    display: block;
+    box-sizing: border-box;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"]:focus {
+    outline: none;
+}
+
+#reg-btn {
+    background-color: #04aa6d;
+    color: white;
+    padding: 15px 20px;
+    margin: 2px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+#reg-btn:hover {
+    opacity: 1;
+}
+
+.signin {
+    background-color: #f1f1f1;
+    margin: 5px 0;
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="article">
+<div class="article">
     <a href="/create" class="btn btn-primary mb-2 float-right">Create Post</a><br><br>
     <table class="table table-striped">
         @if (count($posts) > 0)

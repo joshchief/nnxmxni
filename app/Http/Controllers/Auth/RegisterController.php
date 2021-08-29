@@ -1,73 +1,92 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
+use App\Mail\VerifyEmail;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+
+use App\Models\User;
+use App\Models\VerifyUser;
+use Carbon\Carbon;
+use Str;
+use Mail;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
-    use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    // show register form 
+    public function signupForm()
     {
-        $this->middleware('guest');
+        return view('auth.register');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    // create & store new user
+    public function signUp(Request $request)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => ['required', 'confirmed', Password::min(8)
+                                                            ->mixedCase()
+                                                            ->symbols()  
+                                                            ->numbers()
+                                                            ->uncompromised()
+                        ],
+            'password_confirmation' => 'required'
         ]);
+
+        if($validator->fails()){
+            return redirect()
+                    ->back()
+                    ->withErrors($validator)
+                    ->withInput();
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        VerifyUser::create([
+            'token' => Str::random(60),
+            'user_id' => $user->id
+        ]);
+
+        Mail::to($user->email)->send(new VerifyEmail($user));
+
+        return redirect('/login')->with('info', 'Kindly click the link sent to your email');
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    protected function create(array $data)
+
+
+
+    public function verifyEmail($token)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $verifiedUser = VerifyUser::where('token', $token)->first();
+        
+        if(isset($verifiedUser)){
+
+            $user = $verifiedUser->user;
+
+            if(!$user->email_verified_at){
+
+                $user->email_verified_at = Carbon::now();
+                $user->save();
+                return redirect('login')
+                                ->with('success', 'Email verification done');
+            } else {
+                return redirect()->back()
+                                ->with('info', 'Email has already been verified');
+            }
+
+        } else {
+            return redirect('login')
+                        ->with('error', 'Something went wrong'); 
+        }
     }
+    
 }
